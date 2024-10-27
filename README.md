@@ -5,6 +5,7 @@ Be sure to follow these steps: https://ai.google.dev/gemini-api/docs/imagen?auth
 must do 
 
 
+must use conda or other venv
 
 
 to run program: run frontEnd.py
