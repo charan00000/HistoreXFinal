@@ -24,7 +24,7 @@ of environment the characters are in. I want two images for each and every parag
 Remember the main goal is to help the reader learn about their topic all while keeping 
 them engaged and entertained. Make the story dramatic so that it captivates the users and keeps them engaged and learing 
 througuhout the video. Also please please please make sure the story is entirely historically accurate.
-Make sure each paragraph takes the same amount of time to speak out loud. The story should have 1 paragraphs.
+Make sure each paragraph takes the same amount of time to speak out loud. The story should have 4 minimum paragraphs.
 
 Follow this format for each paragraph:
 

@@ -2,7 +2,7 @@
 AI ATL Project Charan Krish Aarush Sid
 
 Be sure to follow these steps: https://ai.google.dev/gemini-api/docs/imagen?authuser=1
-must do 
+Also pip install google-cloud-texttospeech
 
 
 must use conda or other venv
