@@ -1,4 +1,10 @@
 # HistoreX
 AI ATL Project Charan Krish Aarush Sid
 
-Project Description:
+Be sure to follow these steps: https://ai.google.dev/gemini-api/docs/imagen?authuser=1
+must do 
+
+
+
+
+to run program: run frontEnd.py
