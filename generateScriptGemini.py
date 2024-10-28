@@ -1,10 +1,6 @@
 import os
 import google.generativeai as genai
-#from reportlab.lib.pagesizes import letter
-#from reportlab.pdfgen import canvas
-#from reportlab.lib.units import inch
 import re
-#import fitz
 
 
 # Set API key for Gemini

@@ -1,6 +1,5 @@
 import os
 from google.cloud import texttospeech
-from generateScriptGemini import generate_script, generate_story
 
 
 # Set the environment variable programmatically

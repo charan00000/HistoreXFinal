@@ -1,11 +1,9 @@
 import streamlit as st
-import pandas as pd
 import PyPDF2
 from io import BytesIO
 import os
 import shutil
 import mutagen
-from moviepy.editor import VideoFileClip, AudioFileClip
 
 
 from generateScriptGemini import *
@@ -102,7 +100,7 @@ for description in images:
 audio = mutagen.File("speech_synthesis.mp3")
 length = audio.info.length
 fps = len(images) / float(length)
-generate_video(fps, "speech_synthesis.mp3", "song.mp3")
+generate_video(fps, "speech_synthesis.mp3", "music\\song.mp3")
 print("done")
 
 
