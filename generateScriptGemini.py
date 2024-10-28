@@ -16,7 +16,7 @@ If it would help the reader to learn about the topic, the story should a main ch
 details that would be relevant for a student to know for an exam. Don't create a main character if it doesn't make sense for the topic The script will be used in a slideshow style video where a voice will narrate the story with images in the background to help immerse the 
 audience in the learning experience. Also set the scene for the story so the reader has context about the topic and what kind 
 of environment the characters are in. I want two images for each and every paragraph with their descriptions before the narrator's scriptMake two images on their own line for each paragraph of the story. For the images that correspond with each paragraph give me the image in this exact format: 
-"Image: [consistent style image description geared towards an ai image generator that sets the scene and matches what the narrator is about to say here]". Only give image descriptions Google's Imagen3 model can comfortably generate without violating any protocols.
+"Image: [consistently style image description that does not contain sensitve words which would violate google's AI Principles and Responsible AI Practices and sets the scene and matches what the narrator is about to say here]". Only give image descriptions Google's Imagen3 model can comfortably generate without violating any protocols.
 Remember the main goal is to help the reader learn about their topic all while keeping 
 them engaged and entertained. Make the story dramatic so that it captivates the users and keeps them engaged and learing 
 througuhout the video. Also please please please make sure the story is entirely historically accurate.
