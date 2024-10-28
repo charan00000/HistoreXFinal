@@ -1,11 +1,14 @@
 google_cloud_aiplatform==1.70.0
+google-cloud-texttospeech==2.20.0
 opencv_python==4.10.0.84
 streamlit==1.39.0
 protobuf==5.28.3
 python-dotenv==1.0.1
+Pillow==10.4.0
 reportlab==4.2.5
 vertexai==1.70.0
 moviepy==1.0.3
 mutagen==1.47.0
 PyPDF2==3.0.1
 pandas==2.1.2
+git+https://github.com/google-gemini/generative-ai-python@imagen
