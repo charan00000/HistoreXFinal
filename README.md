@@ -1,7 +1,7 @@
 # HistoreX
 AI ATL Project Charan Krish Aarush Sid
 
-Be sure to follow these steps: https://ai.google.dev/gemini-api/docs/imagen?authuser=1
+Be sure to follow all of these steps: https://ai.google.dev/gemini-api/docs/imagen?authuser=1
 Also pip install google-cloud-texttospeech
 
 
