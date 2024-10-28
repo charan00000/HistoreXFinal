@@ -64,8 +64,6 @@ if uploaded_file is not None:
 st.subheader("Describe the topic you would like to learn (be specific): ")
 userText = st.text_input(" ")
 
-st.write("Generating script...")
-
 # Generating story
 story = generate_story(userText, pdf_text)
 print(story)
@@ -110,5 +108,3 @@ if os.path.exists(video_file_path):
     video_file = open(video_file_path, "rb")
     video_bytes = video_file.read()
     st.video(video_bytes)
-else:
-    st.write("The video file was not generated successfully.")
