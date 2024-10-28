@@ -25,6 +25,8 @@ def setup_environment():
     if os.path.exists(images_dir):
         shutil.rmtree(images_dir)  # Delete the directory and its contents
         os.makedirs(images_dir)  # Recreate an empty directory
+        with open('images\\.gitignore', 'w') as gitignore_file:
+            gitignore_file.write("*\n!.gitignore")
 
     # Delete the output video file if it exists
     if os.path.exists(video_file_path):
