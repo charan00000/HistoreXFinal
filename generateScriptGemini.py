@@ -114,6 +114,8 @@ def generate_story(input_text, context=""):
     
     chat_session = model.start_chat(history=[])
     response = chat_session.send_message(full_prompt)
+    with open('raw_script.txt', "w") as script_file:
+        script_file.write(response.text)
     return response.text
 
 
