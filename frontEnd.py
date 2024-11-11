@@ -17,35 +17,26 @@ def setup_environment():
     """
     Clears the images folder and deletes output_with_audio.mp4 if they exist.
     """
-    # Define the paths
     images_dir = "images"
     video_file_path = "output_with_audio.mp4"
     
     # Remove all files in the images directory if it exists
     if os.path.exists(images_dir):
-        shutil.rmtree(images_dir)  # Delete the directory and its contents
-        os.makedirs(images_dir)  # Recreate an empty directory
+        shutil.rmtree(images_dir) 
+        os.makedirs(images_dir)  
         with open('images\\.gitignore', 'w') as gitignore_file:
             gitignore_file.write("*\n!.gitignore")
-
-    # Delete the output video file if it exists
     if os.path.exists(video_file_path):
         os.remove(video_file_path)
 
-# Run the setup function before anything else
 setup_environment()
 
 def extract_text_from_pdf(uploaded_file):
     """
     Takes a PDF file and returns its text content as a string.
     """
-    # Create a BytesIO object from the uploaded file
     pdf_bytes = BytesIO(uploaded_file.read())
-    
-    # Create a PDF reader object
     pdf_reader = PyPDF2.PdfReader(pdf_bytes)
-    
-    # Extract text from all pages
     text = ""
     for page in pdf_reader.pages:
         text += page.extract_text()
@@ -60,13 +51,12 @@ uploaded_file = st.file_uploader(" ", type="pdf")  # Specify PDF file type
 
 pdf_text = ""
 if uploaded_file is not None:
-    # Extract text from PDF
     pdf_text = extract_text_from_pdf(uploaded_file)
 
 st.subheader("Describe the topic you would like to learn (be specific): ")
 userText = st.text_input(" ")
 
-# Generating story
+# Generate story
 story = generate_story(userText, pdf_text)
 print(story)
 script = generate_script(story)
