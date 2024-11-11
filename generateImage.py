@@ -27,7 +27,7 @@ def generate_image(prompt, file_name):
             safety_filter_level="block_only_high",
             person_generation="allow_adult",
             aspect_ratio="16:9"
-            #negative_prompt="",
+            #negative_prompt=""
         )
 
         if not result.images:
