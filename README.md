@@ -1,5 +1,6 @@
 # HistoreXFinal
 AI ATL Project Charan Krish Aarush Sid
+https://devpost.com/software/historex
 
 must use conda or other venv
 
