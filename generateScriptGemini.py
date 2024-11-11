@@ -19,7 +19,7 @@ of environment the characters are in. I want two images for each and every parag
 "Image: [consistently style image description that does not contain sensitve words which would violate google's AI Principles and Responsible AI Practices and sets the scene and matches what the narrator is about to say here]". Only give image descriptions Google's Imagen3 model can comfortably generate without violating any protocols.
 Remember the main goal is to help the reader learn about their topic all while keeping 
 them engaged and entertained. Make the story dramatic so that it captivates the users and keeps them engaged and learing 
-througuhout the video. Also please please please make sure the story is entirely historically accurate.
+througuhout the video. Also make sure the story is entirely historically accurate.
 Make sure each paragraph takes the same amount of time to speak out loud. The story should have 4 minimum paragraphs.
 
 Follow this format for each paragraph:
@@ -37,9 +37,6 @@ Using the text provided, extract purely the script for a text to language model 
 that is reading the script. Format it so that it is ready to be read by a voice actor with no stage directions or any other 
 information that would not be read by the voice actor. 
 """
-
-
-
 
 def generate_script(input_text):
     generation_config = {
@@ -66,34 +63,6 @@ def generate_script(input_text):
     response = chat_session.send_message(full_prompt)
     return response.text
 
-
-
-
-"""def generate_story(input_text):
-    generation_config = {
-        "temperature": 1,
-        "top_p": 0.95,
-        "top_k": 64,
-        "max_output_tokens": 8192,
-        "response_mime_type": "text/plain",
-    }
-    
-    model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
-        generation_config=generation_config,
-    )
-    
-    # Combine persistent instructions with the specific user prompt
-    full_prompt = f"{pre_prompt}\n\nTopic: {input_text}"
-    
-    # Start chat session and send the combined prompt
-    chat_session = model.start_chat(
-        history=[],
-    )
-    
-    response = chat_session.send_message(full_prompt)
-    return response.text"""
-
 def generate_story(input_text, context=""):
     generation_config = {
         "temperature": 1,
@@ -116,9 +85,6 @@ def generate_story(input_text, context=""):
     response = chat_session.send_message(full_prompt)
     return response.text
 
-
-
-
 def extract_image_descriptions(text):
     # Regular expression to find lines that start with '**Image: ' and capture the description
     image_pattern = r"\*\*Image:\s+(.*?)\*\*"
@@ -127,22 +93,3 @@ def extract_image_descriptions(text):
     return descriptions  # Return the list of image descriptions
 
 
-
-# Call the function and store results in an array
-#descriptions_array = extract_image_descriptions(generate_story("George Washington taking Trenton with his soldiers"))
-
-
-"""for description in descriptions_array:
-    print(description)"""
-
-
-
-#generates text using the input text
-#print(generate_story("George Washington taking Trenton with his soldiers"))
-"""s = generate_story("George Washington taking Trenton with his soldiers")
-print(generate_script(s))
-print("--------------------------------------------------------------------------------------------------------")
-print(extract_image_descriptions(s))"""
-
-#generates pdf using the text from the gemini response
-#text_to_pdf(get_gemini_response("George Washington taking Trenton with his soldiers"), "output.pdf")
