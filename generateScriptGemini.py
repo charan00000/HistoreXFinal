@@ -2,14 +2,12 @@ import os
 import google.generativeai as genai
 import re
 
-
-# Set API key for Gemini
-os.environ["API_KEY"] = "API_KEY"
+os.environ["API_KEY"] = "API_KEY"    # paste Gemeni API key here
 genai.configure(api_key=os.environ["API_KEY"])
 
-video_length = 5  # Length of the video in minutes
+video_length = 5  # minutes
 
-# Persistent instructions for storytelling
+# instructions for storytelling
 pre_prompt = """
 Create an a very enticing, dramatic, and educational story aimed at helping users understand the main ideas. 
 If it would help the reader to learn about the topic, the story should a main character that is set in the time/event of the topic the user wants to learn about and include 
@@ -46,16 +44,11 @@ def generate_script(input_text):
         "max_output_tokens": 8192,
         "response_mime_type": "text/plain",
     }
-    
     model = genai.GenerativeModel(
         model_name="gemini-1.5-flash",
         generation_config=generation_config,
     )
-    
-    # Combine persistent instructions with the specific user prompt
     full_prompt = f"{pre_prompt_script}\n\nTopic: {input_text}"
-    
-    # Start chat session and send the combined prompt
     chat_session = model.start_chat(
         history=[],
     )
@@ -77,7 +70,6 @@ def generate_story(input_text, context=""):
         generation_config=generation_config,
     )
     
-    # Modified to include context in the prompt
     formatted_prompt = pre_prompt.format(context=context if context else "No additional context provided", video_length=video_length)
     full_prompt = f"{formatted_prompt}\n\nTopic: {input_text}"
     
@@ -86,10 +78,8 @@ def generate_story(input_text, context=""):
     return response.text
 
 def extract_image_descriptions(text):
-    # Regular expression to find lines that start with '**Image: ' and capture the description
     image_pattern = r"\*\*Image:\s+(.*?)\*\*"
-    # Find all matches and return as a list
     descriptions = re.findall(image_pattern, text)
-    return descriptions  # Return the list of image descriptions
+    return descriptions
 
 
