@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 import cv2
-from moviepy.editor import VideoFileClip, AudioFileClip, concatenate_audioclips, CompositeAudioClip
+from moviepy import VideoFileClip, AudioFileClip, concatenate_audioclips, CompositeAudioClip
 import re
 
 def reformat_images():
