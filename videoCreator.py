@@ -71,7 +71,6 @@ def generate_video(fps, speech_audio_file, music_file):
         frame_index += 1
 
     video.release()
-    cv2.destroyAllWindows()
     if speech_audio_file and music_file:
         combine_audio_and_video(video_name, speech_audio_file, music_file, "output_with_audio.mp4")
 
