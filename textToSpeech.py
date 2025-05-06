@@ -5,7 +5,7 @@ import json
 
 
 # Set the environment variable programmatically
-with open("secrets.toml", "r") as toml_file:
+with open(".streamlit/secrets.toml", "r") as toml_file:
     keys = toml.load(toml_file)
 
 google_cloud_keys = keys['GOOGLE_CLOUD_CONSOLE_KEYS']

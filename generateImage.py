@@ -7,7 +7,7 @@ from google.genai.errors import ClientError
 from dotenv import load_dotenv
 import toml
 
-keys = toml.load("secrets.toml")
+keys = toml.load(".streamlit/secrets.toml")
 client = genai.Client(api_key=keys["GOOGLE_API_KEY"])
 
 def generate_image(prompt, file_name):
