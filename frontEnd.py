@@ -70,7 +70,7 @@ if st.button("Restart"):
 st.session_state.user_text = st.text_input("")
 success_message = st.empty()
 if st.session_state.user_text.strip():
-    success_message.success("Generating video...")
+    success_message.success("Generating video... (this may take a minute or two)")
     story = generate_story(st.session_state.user_text, pdf_text)
     if story == "ClientError":
         st.error("Sorry! Due to Google Gemini API limitations, we cannot generate this video yet. Please wait roughly 30 seconds before trying again.")
