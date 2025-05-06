@@ -1,9 +1,18 @@
 import os
-from google.cloud import texttospeech
+import google.cloud.texttospeech as texttospeech
+import toml
+import json
 
 
 # Set the environment variable programmatically
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "key.json"
+with open("keys.toml", "r") as toml_file:
+    keys = toml.load(toml_file)
+
+google_cloud_keys = keys['GOOGLE_CLOUD_CONSOLE_KEYS']
+with open("keys.json", "w") as temp_json_file:
+    json.dump(google_cloud_keys, temp_json_file)
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'keys.json'
 
 def list_voices():
     """Lists the available voices."""

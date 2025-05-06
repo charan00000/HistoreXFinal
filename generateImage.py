@@ -1,12 +1,14 @@
 import os
-import google.generativeai as genai
+import google.genai as genai
+from google.genai import types
+from PIL import Image
+from io import BytesIO
+from google.genai.errors import ClientError
 from dotenv import load_dotenv
+import toml
 
-load_dotenv()
-
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-
-imagen = genai.ImageGenerationModel("imagen-3.0-generate-001")
+keys = toml.load("keys.toml")
+client = genai.Client(api_key=keys["GOOGLE_API_KEY"])
 
 def generate_image(prompt, file_name):
     """
@@ -23,25 +25,33 @@ def generate_image(prompt, file_name):
     if not os.path.exists(image_dir):
         os.makedirs(image_dir)
     
+    mod_prompt = "Cartoon style that is high school friendly: " + prompt
     try:
-        result = imagen.generate_images(
-            prompt="Cartoon style that is high school friendly: " + prompt,
-            number_of_images=1,
-            safety_filter_level="block_only_high",
-            person_generation="allow_adult",
-            aspect_ratio="16:9"
-            #negative_prompt=""
+        response = client.models.generate_content(
+            model="gemini-2.0-flash-exp-image-generation",
+            contents=mod_prompt,
+            config=types.GenerateContentConfig(
+                response_modalities=['TEXT', 'IMAGE']
+            )
         )
+    except ClientError as e:
+        print(f"Image Generation ClientError: {e}")
+        pass
 
-        if not result.images:
-            print(f"No images returned for prompt: {prompt}")
+    """for part in response.candidates[0].content.parts:
+        if part.inline_data is None:
+            print(f"Error generating image for prompt '{prompt}': {part.text}")
             return False
-        
-        for i, image in enumerate(result.images):
-            file_path = os.path.join(image_dir, f"{file_name}.png")
-            image._pil_image.save(file_path)
-            print(f"Image saved to: {file_path}")
+        elif part.inline_data is not None:
+            image = Image.open(BytesIO((part.inline_data.data)))
+            file_path = os.path.join(image_dir, f'{file_name}.png')
+            image.save(file_path)
+            return True"""
+    for part in response.candidates[0].content.parts:
+        if part.inline_data is not None:
+            image = Image.open(BytesIO(part.inline_data.data))
+            file_path = os.path.join(image_dir, f'{file_name}.png')
+            image.save(file_path)
             return True
+    return True
         
-    except Exception as e:
-        print(f"Error generating image for prompt '{prompt}': {e}")

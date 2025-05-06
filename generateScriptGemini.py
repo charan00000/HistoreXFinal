@@ -1,12 +1,14 @@
 import os
-import google.generativeai as genai
+import google.genai as genai
+from google.genai import types
 import re
 from dotenv import load_dotenv
+from google.genai.errors import ClientError
+import toml
+keys = toml.load("keys.toml")
+client = genai.Client(api_key=keys["GOOGLE_API_KEY"])
 
-load_dotenv()
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-
-video_length = 5  # minutes
+video_length = 2  # minutes
 
 # instructions for storytelling
 pre_prompt = """
@@ -19,7 +21,7 @@ of environment the characters are in. I want two images for each and every parag
 Remember the main goal is to help the reader learn about their topic all while keeping 
 them engaged and entertained. Make the story dramatic so that it captivates the users and keeps them engaged and learing 
 througuhout the video. Also make sure the story is entirely historically accurate.
-Make sure each paragraph takes the same amount of time to speak out loud. The story should have 4 minimum paragraphs.
+Make sure each paragraph takes the same amount of time to speak out loud. The story should have 4 paragraphs and only four paragraphs.
 
 Follow this format for each paragraph:
 
@@ -45,6 +47,15 @@ def generate_script(input_text):
         "max_output_tokens": 8192,
         "response_mime_type": "text/plain",
     }
+    full_prompt = f"{pre_prompt_script}\n\nTopic: {input_text}"
+    try:
+        response = client.models.generate_content(
+            model = "gemini-2.0-flash",
+            contents = full_prompt,
+        )
+        return response.text
+    except ClientError as e:
+        return "ClientError"
     model = genai.GenerativeModel(
         model_name="gemini-1.5-flash",
         generation_config=generation_config,
@@ -57,6 +68,7 @@ def generate_script(input_text):
     response = chat_session.send_message(full_prompt)
     return response.text
 
+
 def generate_story(input_text, context=""):
     generation_config = {
         "temperature": 1,
@@ -66,17 +78,17 @@ def generate_story(input_text, context=""):
         "response_mime_type": "text/plain",
     }
     
-    model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
-        generation_config=generation_config,
-    )
-    
     formatted_prompt = pre_prompt.format(context=context if context else "No additional context provided", video_length=video_length)
     full_prompt = f"{formatted_prompt}\n\nTopic: {input_text}"
     
-    chat_session = model.start_chat(history=[])
-    response = chat_session.send_message(full_prompt)
-    return response.text
+    try:
+        response = client.models.generate_content(
+            model = "gemini-2.0-flash",
+            contents = full_prompt,
+        )
+        return response.text
+    except ClientError as e:
+        return "ClientError"
 
 def extract_image_descriptions(text):
     image_pattern = r"\*\*Image:\s+(.*?)\*\*"

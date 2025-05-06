@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 import cv2
-from moviepy import VideoFileClip, AudioFileClip, concatenate_audioclips, CompositeAudioClip
+from moviepy.editor import VideoFileClip, AudioFileClip, concatenate_audioclips, CompositeAudioClip
 import re
 
 def reformat_images():
@@ -44,31 +44,27 @@ def generate_video(fps, speech_audio_file, music_file):
     for file_name in os.listdir(folder_path):
         match = pattern.match(file_name)
         if match:
-            # Extract the number and add to the list as a tuple (number, file_name)
             number = int(match.group(1))
             image_files.append((number, file_name))
 
     # Sort images based off of number value in names
     image_files.sort(key=lambda x: x[0])
     sorted_image_files = [file_name for _, file_name in image_files]
-    if not sorted_image_files:
-        print("No images found in the specified format.")
-        return
+    print(sorted_image_files)
+    
     frame = cv2.imread(os.path.join(folder_path, sorted_image_files[0]))
-    if frame is None:
-        print("Error reading the first image.")
-        return
-
     height, width, _ = frame.shape
     speech_audio_clip = AudioFileClip(speech_audio_file)
-    audio_duration = speech_audio_clip.durationl
+    audio_duration = speech_audio_clip.duration
     total_frames = int(audio_duration * fps)
+    print(total_frames)
     video = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
     frame_index = 0
     while frame_index < total_frames:
         img_path = os.path.join(folder_path, sorted_image_files[frame_index % len(sorted_image_files)])
         frame = cv2.imread(img_path)
         if frame is not None:
+            frame = cv2.resize(frame, (width, height))
             video.write(frame)
         else:
             print(f"Error reading {img_path}. Skipping this image.")

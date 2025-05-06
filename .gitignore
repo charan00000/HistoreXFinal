@@ -401,3 +401,5 @@ FodyWeavers.xsd
 
 .env
 key.json
+keys.toml
+keys.json
