@@ -13,7 +13,10 @@ from textToSpeech import *
 from generateImage import *
 from videoCreator import *
 
-
+if "user_text" not in st.session_state:
+    st.session_state.user_text = ""
+if "images" not in st.session_state:
+    st.session_state.images = []
 
 def setup_environment():
     """
@@ -22,7 +25,6 @@ def setup_environment():
     images_dir = "images"
     video_file_path = "output_with_audio.mp4"
     
-    # Remove all files in the images directory if it exists
     if os.path.exists(images_dir):
         shutil.rmtree(images_dir) 
         os.makedirs(images_dir)  
@@ -44,22 +46,32 @@ def extract_text_from_pdf(uploaded_file):
         text += page.extract_text()
     return text
 
+
+
 st.set_page_config(page_title="Historex", page_icon="📚", layout="wide")
 st.markdown("<h1 style='text-align: center; color: white;'>📚 HistoreX</h1>", unsafe_allow_html=True)
 st.write("---")
 st.subheader("Upload a desired textbook chapter (Optional):")
 uploaded_file = st.file_uploader(" ", type="pdf")
 
+
 pdf_text = ""
 if uploaded_file is not None:
     pdf_text = extract_text_from_pdf(uploaded_file)
 
 st.subheader("Describe the topic you would like to learn (be specific): Press 'Enter' to generate video")
-userText = st.text_input(" ")
+
+if st.button("Restart"):
+    setup_environment()
+    st.session_state.user_text = ""
+    st.session_state.images = []
+    st.rerun()
+
+st.session_state.user_text = st.text_input("")
 success_message = st.empty()
-if userText:
+if st.session_state.user_text.strip():
     success_message.success("Generating video...")
-    story = generate_story(userText, pdf_text)
+    story = generate_story(st.session_state.user_text, pdf_text)
     if story == "ClientError":
         st.error("Sorry! Due to Google Gemini API limitations, we cannot generate this video yet. Please wait roughly 30 seconds before trying again.")
         st.stop()
@@ -68,16 +80,16 @@ if userText:
     if script == "ClientError":
         st.error("Sorry! Due to Google Gemini API limitations, we cannot generate this video yet. Please wait roughly 30 seconds before trying again.")
         st.stop()
-    images = extract_image_descriptions(story)
+    st.session_state.images = extract_image_descriptions(story)
 
 
     synthesize_text_with_audio_profile(script)
 
 
-    print("num images to create: " + str(len(images)))
+    print("num images to create: " + str(len(st.session_state.images)))
     MAX_RETRIES = 3
     i = 1
-    for description in images:
+    for description in st.session_state.images:
         attempts = 0
         success = False
         while attempts < MAX_RETRIES and not success:
@@ -97,14 +109,12 @@ if userText:
 
     audio = mutagen.File("speech_synthesis.mp3")
     length = audio.info.length
-    fps = len(images) / float(length)
+    fps = len(st.session_state.images) / float(length)
     generate_video(fps, "speech_synthesis.mp3", "music/song.mp3")
     print("done")
 
     success_message.empty()
-    if st.button("Generate New Video"):
-        setup_environment()
-        st.experimental_rerun()
+    
     
     video_file_path = "output_with_audio.mp4"
     if os.path.exists(video_file_path):
