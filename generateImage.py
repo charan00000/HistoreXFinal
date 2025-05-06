@@ -1,7 +1,10 @@
 import os
 import google.generativeai as genai
+from dotenv import load_dotenv
 
-genai.configure(api_key=os.environ["API_KEY"])
+load_dotenv()
+
+genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
 imagen = genai.ImageGenerationModel("imagen-3.0-generate-001")
 

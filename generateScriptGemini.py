@@ -1,9 +1,10 @@
 import os
 import google.generativeai as genai
 import re
+from dotenv import load_dotenv
 
-os.environ["API_KEY"] = "API_KEY"    # paste Gemeni API key here
-genai.configure(api_key=os.environ["API_KEY"])
+load_dotenv()
+genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
 video_length = 5  # minutes
 
