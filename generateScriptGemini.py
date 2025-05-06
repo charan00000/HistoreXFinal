@@ -5,7 +5,7 @@ import re
 from dotenv import load_dotenv
 from google.genai.errors import ClientError
 import toml
-keys = toml.load("keys.toml")
+keys = toml.load("secrets.toml")
 client = genai.Client(api_key=keys["GOOGLE_API_KEY"])
 
 video_length = 2  # minutes

@@ -403,3 +403,4 @@ FodyWeavers.xsd
 key.json
 keys.toml
 keys.json
+secrets.toml
