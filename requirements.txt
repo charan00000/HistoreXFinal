@@ -42,7 +42,6 @@ moviepy==1.0.3
 mutagen==1.47.0
 narwhals==1.38.0
 numpy==2.2.5
-//opencv-python==4.11.0.86
 opencv-python-headless==4.11.0.86
 packaging==24.2
 pandas==2.2.3
