@@ -25,7 +25,7 @@ def generate_image(prompt, file_name):
     if not os.path.exists(image_dir):
         os.makedirs(image_dir)
     
-    mod_prompt = "Cartoon style that is high school friendly: " + prompt
+    mod_prompt = "Generate an image, cartoon style, that is high school friendly: " + prompt + ". If that prompt is too innapropriate for you to generate, generate a different approporiate picture that is similar to the broad topic on hand with high safety rating and low probabililty harm categories."
     try:
         response = client.models.generate_content(
             model="gemini-2.0-flash-exp-image-generation",
@@ -47,11 +47,19 @@ def generate_image(prompt, file_name):
             file_path = os.path.join(image_dir, f'{file_name}.png')
             image.save(file_path)
             return True"""
-    for part in response.candidates[0].content.parts:
-        if part.inline_data is not None:
-            image = Image.open(BytesIO(part.inline_data.data))
-            file_path = os.path.join(image_dir, f'{file_name}.png')
-            image.save(file_path)
-            return True
+    failedImageButNoAttributeError = True
+    try:
+        for part in response.candidates[0].content.parts:
+            if part.inline_data is not None:
+                failedImageButNoAttributeError = False
+                image = Image.open(BytesIO(part.inline_data.data))
+                file_path = os.path.join(image_dir, f'{file_name}.png')
+                image.save(file_path)
+                return True
+        if failedImageButNoAttributeError:
+            raise AttributeError("Image generation failed, but no attribute error occurred.")
+    except AttributeError as e:
+        print(f"Response: {response.candidates[0].safety_ratings}")
+        return False
     return True
         
