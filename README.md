@@ -1,6 +1,6 @@
 # HistoreXFinal
 Now deployed! [historex.streamlit.app](https://historex.streamlit.app)
-
+for any errors that arise upon waking app from sleep: refresh page
 
 AI ATL Project Charan Krish Aarush Sid
 https://devpost.com/software/historex
