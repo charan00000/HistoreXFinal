@@ -59,7 +59,7 @@ pdf_text = ""
 if uploaded_file is not None:
     pdf_text = extract_text_from_pdf(uploaded_file)
 
-st.subheader("Describe the topic you would like to learn (be specific). Press 'Enter' to generate video")
+st.subheader("Describe what historical event you would like to learn about. Press 'Enter' to generate video")
 
 if st.button("Restart"):
     setup_environment()
